@@ -15,7 +15,12 @@ var conn = mysql.createConnection({
   password : 'groupNaN' // Hey look a plaintext password
 });
 
+app.use(session({ secret: "pug", saveUninitialized: true, resave: false, cookie: { maxAge: null } }));
+app.use(bodyParser.urlencoded({ extended: false }));
+
 // Passport
+app.use(passport.initialize());
+app.use(passport.session());
 passport.use(new LocalStrategy(
   function(username, password, done) {
     conn.query( `SELECT * FROM users WHERE user_name=?`, [username] ).then(function (err, user) {
@@ -31,6 +36,20 @@ passport.use(new LocalStrategy(
     });
   }
 ));
+
+passport.serializeUser(function(user, done) {
+  done(null, user.student_id);
+});
+
+passport.deserializeUser(function(id, done) {
+  knex('users.student')
+    .where({student_id: id}).first()
+    .then(function(user) {
+      done(null, user);
+  }).catch((err) => { 
+    done(err,null); 
+  });
+});
 
 // App
 app.set('views', './view');
