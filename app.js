@@ -38,13 +38,11 @@ passport.use(new LocalStrategy(
 ));
 
 passport.serializeUser(function(user, done) {
-  done(null, user.student_id);
+  done(null, users.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  knex('users.student')
-    .where({student_id: id}).first()
-    .then(function(user) {
+  conn.query(`SELECT id FROM users WHERE id=?`, [id]).then(function(user) {
       done(null, user);
   }).catch((err) => { 
     done(err,null); 
@@ -61,16 +59,15 @@ app.get('/',function(req,res){
 	conn.connect();
 	conn.query('SELECT * FROM users', (err, qres, fields)=> {
 		if (err) {throw err;}
-		console.log(qres);
+		//console.log(qres);
 		res.render('index', {title: 'Hey', message: 'Hello there!', submessage: 'This is a subtitle'});
 	});
 	conn.end();
 });
 
-app.route('login')
-	.get((req, res) => {res.redirect('/login.html');})
-	.post(passport.authenticate('local', { successRedirect: '/',
-                                                    failureRedirect: '/login' }));
+app.get('/login', function(req, res){
+	res.render('login', {title: "fucker"});
+});
 
 app.get('*', function(req, res, next) {
   let err = new Error('Page Not Found');
