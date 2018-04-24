@@ -1,3 +1,26 @@
+@import url("https://fonts.googleapis.com/css?family=Lato|Oswald:400,600");
 html {
+  color: #0a090c;
   padding: 0;
   margin: 0; }
+
+body {
+  margin: inherit;
+  padding: inherit; }
+
+header {
+  font-family: "Oswald", serif;
+  background-color: #90ddf0;
+  padding: 0.6em; }
+  header h1, header h2, header h3, header h4, header h5, header h6 {
+    padding: inherit;
+    margin: 0; }
+  header .idea {
+    font-weight: 400; }
+  header .share {
+    font-weight: 600; }
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: stretch; }
