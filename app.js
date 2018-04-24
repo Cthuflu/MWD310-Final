@@ -66,7 +66,7 @@ app.get('/',function(req,res){
 });
 
 app.get('/login', function(req, res){
-	res.render('login', {title: "fucker"});
+	res.render('login', {title: "ideaShare for sharing ideas: Not powered by wordpress"});
 });
 
 app.get('*', function(req, res, next) {
