@@ -2,4 +2,11 @@ header#header
 	h1
 		span(class='idea') idea
 		span(class='share') share
-	div(id="nav")=info
+	div(id="nav")
+		if user
+			span(id=uinfo)=user.user_name
+		else
+			span(id=uinfo)
+				a(href="/login") Log In 
+				span or
+				a(href="/")  Create Account

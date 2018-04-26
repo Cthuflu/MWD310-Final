@@ -1,31 +1,89 @@
 @import url('https://fonts.googleapis.com/css?family=Lato|Oswald:400,600');
 
-$blue: #90ddf0;
+$blue: #00aced;
 $black: #0a090c;
 $white: #f0edee;
+$blue2: #2c666e;
+$gray: #C0C0CA;
 
 html{
 	color: $black;
 	padding: 0;
 	margin: 0;
+	font-family: "Lato", sans-serif;
 }
 body{
 	margin: inherit;
 	padding: inherit;
+	background-color: $white;
 }
 header{
+	display: flex;
+	justify-content: space-around;
 	font-family: "Oswald", serif;
 	background-color: $blue;
 	padding: 0.6em;
+	box-shadow: 0 -10px 10px 6px;
 	h1,h2,h3,h4,h5,h6{
+		color: $white;
 		padding: inherit;
 		margin: 0;
+	}
+	align-items: center;
+	#nav{
+		color: $white;
+		font-size: 1.2em;
+		a{
+			color: $blue2;
+		}
+
 	}
 	.idea{font-weight: 400;}
 	.share{font-weight: 600;}
 }
-form{
+#signup{
 	display: flex;
+	flex-flow: row wrap;
+	text-align: center;
 	justify-content: center;
-	align-items: stretch;
+	padding: 4em;
+	#signup-box{
+		display: flex;
+		flex-direction: column;
+		font-family: "Lato", sans-serif;
+		color: $black;
+		box-sizing: border-box;
+		margin: 0 auto;
+		width: 30em;
+		padding: 1.5em;
+		border-radius: 12px;
+		border: 2px solid $gray;
+		text-align: center;
+		form{
+			margin: 0;
+			flex-direction: inherit;
+			.form-group{
+				justify-content: space-between;
+				align-items: baseline;
+				display: flex;
+			}
+			.form-group:not(:last-child){
+				padding-bottom: 38px;
+			}
+			label{
+				margin: auto;
+			}
+			.btn{
+				background-color: $blue;
+				color: $white;
+				width: 100%;
+			}
+			input{
+				border: 1px solid $gray;
+				border-radius: 6px;
+				padding: 0.8em;
+				width: 22em;
+			}
+		}
+	}
 }

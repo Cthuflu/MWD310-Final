@@ -4,6 +4,21 @@ html
 		link(rel='stylesheet', href='/css/style.css')
 body
 	include includes/header.pug
-	h1=message
-	div
-		h2=submessage
+	if user
+		h1=message
+		h3=submessage
+	else
+		div(id="signup")
+			div(id="signup-box")
+				h1(id="create-account") Create Account
+				form(method="post" action="login" accept-charset="utf-8")
+					div.form-group
+						label(for='user_name') User Name
+						input#user_name.form-control(type="text", placeholder="user name", name="user_name")
+					div.form-group
+						label(for='email') Email
+						input#email.form-control(type="email", placeholder="richard@dreyfuss.com", name="email")
+					div.form-group
+						label(for='password') Password
+						input#password.form-control(type="password", placeholder="password", name="password")
+					input.btn.btn-primary(type='submit', value="submit", name="submit")
