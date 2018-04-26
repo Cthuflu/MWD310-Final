@@ -21,14 +21,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(/*{
+passport.use(new LocalStrategy({
     usernameField: 'user_name',
     passwordField: 'password'
-  },*/function(username, password, done) {
-    console.log('Does it work? No?');
+  },function(username, password, done) {
     console.log(`username: ${username} password: ${password}`);
-    conn.query( `SELECT * FROM users WHERE user_name=${username}`, function (err, user) {
-      console.log("user: " + user[0].user_name);
+    conn.query( `SELECT * FROM users WHERE user_name=\'${username}\'`, function (err, user) {
+      console.log(user);
     	if (err) { return done(err); }
       
     	if (!user.length) {
@@ -50,11 +49,10 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  conn.query(`SELECT id FROM users WHERE id=?`, [id]).then(function(user) {
+  conn.query(`SELECT id FROM users WHERE id=?`, [id]),(function(user) {
+  	console.log(user);
       done(null, user);
-  }).catch((err) => { 
-    done(err,null); 
-  });
+  })
 });
 
 // App
@@ -79,10 +77,9 @@ app.get('/login',function(req, res){
 	res.render('login', {title: "ideaShare for sharing ideas: Not powered by wordpress"});
 });
 
-app.post('/login', passport.authenticate('local', {  successRedirect: '/submission',
-                                        failureRedirect: '/login' }));
+app.post('/login', function(req, res, next){ next(); }, passport.authenticate('local', {  successRedirect: '/submit', failureRedirect: '/login' }));
 
-app.get('/submission', verify, function(req, res) {
+app.get('/submit', verify, function(req, res) {
   res.send('submission page');
 });
 
