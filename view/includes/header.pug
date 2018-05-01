@@ -4,7 +4,11 @@ header#header
 		span(class='share') share
 	div(id="nav")
 		if user
-			span(id=uinfo)=user.user_name
+			span(id=uinfo)
+				a(href="/submit") Submit an Idea
+				span or
+				a(href="/ideas") Browse Ideas
+
 		else
 			span(id=uinfo)
 				a(href="/login") Log In 
