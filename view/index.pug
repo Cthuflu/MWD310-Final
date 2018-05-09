@@ -22,3 +22,7 @@ body
 						label(for='password') Password
 						input#password.form-control(type="password", placeholder="password", name="password")
 					input.btn.btn-primary(type='submit', value="submit", name="submit")
+
+	ul
+		each p in projects
+			li=p
