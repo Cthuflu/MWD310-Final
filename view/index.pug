@@ -5,8 +5,9 @@ html
 body
 	include includes/header.pug
 	if user
-		h1=message
-		h3=submessage
+		each val in projects
+			h1=val.project_desc
+			h3=val.repo_link
 	else
 		div(id="signup")
 			div(id="signup-box")
