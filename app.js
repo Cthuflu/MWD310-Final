@@ -63,17 +63,13 @@ app.get('/',function(req,res){
 		if (err) {throw err;}
 		console.log(qres);
 		res.render('index', 
-      { title: 'Hey', 
+      { title: 'ideaShare for sharing ideas: Not powered by wordpress', 
         projects: qres, 
         user: req.user ? req.user.user_name : null});
 	});
 });
 
 app.get('/login',function(req, res){
-  /*conn.query('SELECT * FROM users', (err, qres, fields)=> {
-    if (err) {throw err;}
-    //console.log(qres);
-  });*/
   if(req.user) {
     res.redirect('/submit');
   } else {
@@ -89,6 +85,11 @@ app.post('/login',
 app.get('/submit', verify, function(req, res) {
   res.render('submit', {title: "Submit your bad idea", user: req.user.user_name});
 });
+
+//i clearly have no idea what im doing
+app.post('/submit', function(req, res){
+  conn.query("insert into projects (repo_link, projects_desc) values (" + req.body.project_desc + ", " + req.body.repo_link + ");")
+})
 
 /*app.get('*', function(req, res, next) {
   let err = new Error('Page Not Found');

@@ -5,11 +5,13 @@ html
 body
 	include includes/header.pug
 	div(id="main")
-		form(method="post" action="login" accept-charset="utf-8")
-			div.form-group
-				label(for='project_desc') Describe the Project:
-				input#project_desc.form-control(type='textarea', placeholder='just another shitty idea', name='project_desc')
-			div.form-group
-				label(for='repo_link') Link to Git Repo:
-				input#password.form-control(type='text', placeholder='https://github.com/tomdionysus/foaas', name='repo_link')
-			button.btn.btn-primary(type='submit') submit
+	div(id="form")
+			div(id="form-box")
+				form(method="post" action="login" accept-charset="utf-8")
+					div.form-group
+						label(for='project_desc') Describe the Project:
+						input#project_desc.form-control(type='textarea', placeholder='just another shitty idea', name='project_desc')
+					div.form-group
+						label(for='repo_link') Link to Git Repo:
+						input#repo_link.form-control(type='text', placeholder='https://github.com/tomdionysus/foaas', name='repo_link')
+					input.btn.btn-primary(type='submit', value="submit", name="submit")

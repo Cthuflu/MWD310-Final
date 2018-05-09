@@ -22,6 +22,9 @@ header {
     color: #f0edee;
     padding: inherit;
     margin: 0; }
+  header a {
+    text-decoration: none;
+    color: #f0edee; }
   header #nav {
     color: #f0edee;
     font-size: 1.2em; }
@@ -32,13 +35,13 @@ header {
   header .share {
     font-weight: 600; }
 
-#signup {
+#form {
   display: flex;
   flex-flow: row wrap;
   text-align: center;
   justify-content: center;
   padding: 4em; }
-  #signup #signup-box {
+  #form #form-box {
     display: flex;
     flex-direction: column;
     font-family: "Lato", sans-serif;
@@ -50,23 +53,33 @@ header {
     border-radius: 12px;
     border: 2px solid #C0C0CA;
     text-align: center; }
-    #signup #signup-box form {
+    #form #form-box form {
       margin: 0;
       flex-direction: inherit; }
-      #signup #signup-box form .form-group {
+      #form #form-box form .form-group {
         justify-content: space-between;
         align-items: baseline;
         display: flex; }
-      #signup #signup-box form .form-group:not(:last-child) {
+      #form #form-box form .form-group:not(:last-child) {
         padding-bottom: 38px; }
-      #signup #signup-box form label {
+      #form #form-box form label {
         margin: auto; }
-      #signup #signup-box form .btn {
+      #form #form-box form .btn {
         background-color: #00aced;
         color: #f0edee;
         width: 100%; }
-      #signup #signup-box form input {
+      #form #form-box form input {
         border: 1px solid #C0C0CA;
         border-radius: 6px;
         padding: 0.8em;
         width: 22em; }
+
+#projects {
+  list-style: none;
+  padding: 0; }
+  #projects li {
+    border-width: 1px 0;
+    border-style: solid;
+    border-color: #C0C0CA;
+    margin: 2em;
+    padding: 1em; }

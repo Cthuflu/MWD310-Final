@@ -5,12 +5,10 @@ html
 body
 	include includes/header.pug
 	if user
-		each val in projects
-			h1=val.project_desc
-			h3=val.repo_link
+		h1()=user.user_name
 	else
-		div(id="signup")
-			div(id="signup-box")
+		div(id="form")
+			div(id="form-box")
 				h1(id="create-account") Create Account
 				form(method="post" action="login" accept-charset="utf-8")
 					div.form-group
@@ -24,6 +22,12 @@ body
 						input#password.form-control(type="password", placeholder="password", name="password")
 					input.btn.btn-primary(type='submit', value="submit", name="submit")
 
-	ul
-		each p in projects
-			li=p
+	if projects
+		ul(id="projects")
+			each p in projects
+				li=_
+					h1(id=p.project_id)=p.project_desc
+					if p.repo_link
+						a(href=p.repo_link target="_blank") GitHub Link
+					else
+						span() No Repo Link Provided
