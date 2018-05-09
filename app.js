@@ -48,7 +48,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(id, done) {
   conn.query(`SELECT * FROM users WHERE id=${id}`,function(err, user) {
     if(err) { return done(err); }
-    done(null, user);
+    done(null, user[0]);
   })
 });
 
@@ -62,7 +62,10 @@ app.get('/',function(req,res){
 	conn.query('SELECT * FROM projects', (err, qres, fields)=> {
 		if (err) {throw err;}
 		console.log(qres);
-		res.render('index', {title: 'Hey', message: 'Hello there!', submessage: 'This is a subtitle'});
+		res.render('index', 
+      { title: 'Hey', 
+        projects: qres, 
+        user: req.user ? req.user.user_name : null});
 	});
 });
 
@@ -71,7 +74,12 @@ app.get('/login',function(req, res){
     if (err) {throw err;}
     //console.log(qres);
   });*/
-	res.render('login', {title: "ideaShare for sharing ideas: Not powered by wordpress"});
+  if(req.user) {
+    res.redirect('/submit');
+  } else {
+    res.render('login', {title: "ideaShare for sharing ideas: Not powered by wordpress"})
+  }
+	;
 });
 
 app.post('/login',  
@@ -79,7 +87,7 @@ app.post('/login',
                                     failureRedirect: '/login' }));
 
 app.get('/submit', verify, function(req, res) {
-  res.send('submission page');
+  res.render('submit', {title: "Submit your bad idea", user: req.user.user_name});
 });
 
 /*app.get('*', function(req, res, next) {
@@ -93,7 +101,7 @@ app.listen(8080, () => console.log('Listening on port 8080!'))
 function verify(req, res, next) {
   console.log(`User request from ${req.ip} for ${req.url}`);
   if(!req.user) { 
-    return res.status(418).send('<h1>418: I\'m a teapot</h1>');
+    return res.redirect('/login');
   }
   next();
 }
