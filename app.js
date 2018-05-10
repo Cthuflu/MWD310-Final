@@ -70,26 +70,29 @@ app.get('/',function(req,res){
 
 app.get('/login',function(req, res){
   if(req.user) {
-    res.redirect('/submit');
+    res.redirect('/');
   } else {
     res.render('login', {title: "ideaShare for sharing ideas: Not powered by wordpress"})
   }
-	;
 });
 
 app.post('/login',  
   passport.authenticate('local', {  successRedirect: '/submit', 
                                     failureRedirect: '/login' }));
 
+app.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/login');
+})
+
 app.get('/submit', verify, function(req, res) {
   res.render('submit', {title: "Submit your bad idea", user: req.user.user_name});
 });
 
-//i clearly have no idea what im doing
 app.post('/submit', function(req, res){
   let id = req.user.id;
   let project_desc = req.body.project_desc;
-  let linkRegex = /.+:\/\/.+\..+/;
+  let linkRegex = /.+:\/\/.+\..+/gi;
   let repo_link = linkRegex.exec(req.body.repo_link) ? req.body.repo_link : null;
 
   conn.query(`insert into projects set ?`, 
@@ -97,8 +100,27 @@ app.post('/submit', function(req, res){
     function(err, qres) {
       console.log(qres);
       res.render('submit', {title: "Idea submitted, any more?", user: req.user.user_name});
-    })
-})
+    });
+});
+
+app.post('/register', function(req, res) {
+  let emailReg = /.+\@.+\..+/gi;
+  let email = emailReg.exec(req.body.email) ? req.body.email: null;
+  if(!email || !req.body.user_name || !req.body.password.length || req.body.password.length < 4) {
+    res.redirect('/');
+    return;
+  }
+
+  conn.query(`SELECT * FROM users WHERE ?`, {user_name: req.body.user_name}, function(err, user) {
+    if(!user.length) {
+      conn.query(`INSERT INTO users set ?`,
+        {email: req.body.email, user_name: req.body.user_name, password: req.body.password},
+        function(err, qres) {
+          res.redirect('/login');
+        });
+    }
+  })
+});
 
 /*app.get('*', function(req, res, next) {
   let err = new Error('Page Not Found');
