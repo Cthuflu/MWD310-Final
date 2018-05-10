@@ -27,7 +27,7 @@ passport.use(new LocalStrategy({
     usernameField: 'user_name',
     passwordField: 'password'
   }, function(username, password, done) {
-    conn.query( `SELECT * FROM users WHERE user_name=\'${username}\'`, function (err, user) {
+    conn.query( `SELECT * FROM users WHERE ?`, {user_name: username}, function (err, user) {
     	if (err) { return done(err); }
       
     	if (!user.length) {
@@ -46,7 +46,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
-  conn.query(`SELECT * FROM users WHERE id=${id}`,function(err, user) {
+  conn.query(`SELECT * FROM users WHERE ?`, {id: id},function(err, user) {
     if(err) { return done(err); }
     done(null, user[0]);
   })
@@ -61,7 +61,6 @@ app.use(express.static('public'));
 app.get('/',function(req,res){
 	conn.query('SELECT * FROM projects', (err, qres, fields)=> {
 		if (err) {throw err;}
-		console.log(qres);
 		res.render('index', 
       { title: 'ideaShare for sharing ideas: Not powered by wordpress', 
         projects: qres, 
@@ -88,7 +87,17 @@ app.get('/submit', verify, function(req, res) {
 
 //i clearly have no idea what im doing
 app.post('/submit', function(req, res){
-  conn.query("insert into projects (repo_link, projects_desc) values (" + req.body.project_desc + ", " + req.body.repo_link + ");")
+  let id = req.user.id;
+  let project_desc = req.body.project_desc;
+  let linkRegex = /.+:\/\/.+\..+/;
+  let repo_link = linkRegex.exec(req.body.repo_link) ? req.body.project_desc : null;
+
+  conn.query(`insert into projects set ?`, 
+    {poster_id: req.user.id, repo_link: repo_link, project_desc: project_desc}, 
+    function(err, qres) {
+      console.log(qres);
+      res.render('submit', {title: "Idea submitted, any more?", user: req.user.user_name});
+    })
 })
 
 /*app.get('*', function(req, res, next) {
