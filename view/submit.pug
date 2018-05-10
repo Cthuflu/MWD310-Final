@@ -1,0 +1,18 @@
+html
+	head
+		title=title
+		link(rel='stylesheet', href='/css/style.css')
+body
+	include includes/header.pug
+	div(id="main")
+	div(id="form")
+		div(id="form-box")
+			h1=title
+			form(method="post" action="/submit" accept-charset="utf-8")
+				div.form-group
+					label(for='project_desc') Describe the Project:
+					input#project_desc.form-control(type='textarea', placeholder='just another bad idea', name='project_desc', maxlength='280')
+				div.form-group
+					label(for='repo_link') Link to Git Repo:
+					input#repo_link.form-control(type='text', placeholder='https://github.com/tomdionysus/foaas', name='repo_link')
+				input.btn.btn-primary(type='submit', value="submit", name="submit")

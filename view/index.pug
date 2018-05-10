@@ -1,0 +1,33 @@
+html
+	head
+		title=title
+		link(rel='stylesheet', href='/css/style.css')
+body
+	include includes/header.pug
+	if user
+		h1()=user.user_name
+	else
+		div(id="form")
+			div(id="form-box")
+				h1(id="create-account") Create Account
+				form(method="post" action="/register" accept-charset="utf-8")
+					div.form-group
+						label(for='user_name') User Name
+						input#user_name.form-control(type="text", placeholder="user name", name="user_name")
+					div.form-group
+						label(for='email') Email
+						input#email.form-control(type="email", placeholder="richard@dreyfuss.com", name="email")
+					div.form-group
+						label(for='password') Password
+						input#password.form-control(type="password", placeholder="password", name="password")
+					input.btn.btn-primary(type='submit', value="submit", name="submit")
+
+	if projects
+		ul(id="projects")
+			each p in projects
+				li=_
+					h1(id=p.project_id)=p.project_desc
+					if p.repo_link
+						a(href=p.repo_link target="_blank") GitHub Link
+					else
+						span() No Repo Link Provided

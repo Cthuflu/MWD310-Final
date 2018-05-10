@@ -1,0 +1,16 @@
+header#header
+	h1
+		a(href='/')
+			span(class='idea') idea
+			span(class='share') share
+	div(id="nav")
+		if user
+			span(id=uinfo)
+				a(href="/submit") Submit an Idea 
+				span or 
+				a(href="/") Browse Ideas 
+				span or 
+				a(href="/logout") Logout 
+		else
+			spawn(id=uinfo)
+				a(href="/login") Login

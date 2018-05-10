@@ -1,0 +1,18 @@
+html
+	head
+		title=title
+		link(rel='stylesheet', href='/css/style.css')
+body
+	include includes/header.pug
+	div(id="main")
+		div(id="form")
+			div(id="form-box")
+				h1(id="create-account") Log In
+				form(method="post" action="login" accept-charset="utf-8")
+					div.form-group
+						label(for='user_name') User Name
+						input#user_name.form-control(type="text", placeholder="user name", name="user_name")
+					div.form-group
+						label(for='password') Password
+						input#password.form-control(type="password", placeholder="password", name="password")
+					input.btn.btn-primary(type='submit', value="submit", name="submit")
