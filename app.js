@@ -90,7 +90,7 @@ app.post('/submit', function(req, res){
   let id = req.user.id;
   let project_desc = req.body.project_desc;
   let linkRegex = /.+:\/\/.+\..+/;
-  let repo_link = linkRegex.exec(req.body.repo_link) ? req.body.project_desc : null;
+  let repo_link = linkRegex.exec(req.body.repo_link) ? req.body.repo_link : null;
 
   conn.query(`insert into projects set ?`, 
     {poster_id: req.user.id, repo_link: repo_link, project_desc: project_desc}, 
