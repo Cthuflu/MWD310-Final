@@ -51,6 +51,8 @@ passport.deserializeUser(function(id, done) {
     done(null, user[0]);
   })
 });
+// End passport
+
 
 // App
 app.set('views', './view');
@@ -98,8 +100,9 @@ app.post('/submit', function(req, res){
   conn.query(`insert into projects set ?`, 
     {poster_id: req.user.id, repo_link: repo_link, project_desc: project_desc}, 
     function(err, qres) {
+      let title = qres ? "Idea submitted, any more?" : "Failed to submit idea" ;
       console.log(qres);
-      res.render('submit', {title: "Idea submitted, any more?", user: req.user.user_name});
+      res.render('submit', {title: title, user: req.user.user_name});
     });
 });
 
